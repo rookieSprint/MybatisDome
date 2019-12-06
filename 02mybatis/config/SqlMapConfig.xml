@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!-- 先加载内部标签，在加载外部文件，名称一致时，会替换内容 -->
+    <properties resource="jdbc.properties">
+        <property name="jdbc.name" value="root1"/>
+    </properties>
+    <typeAliases>
+        <!-- 对类型 单个别名的定义，别名的使用不区分大小写   在mapper.xml文件中使用 -->
+        <typeAlias type="com.dyl.mybatis.pojo.User" alias="user"/>
+        <!-- 别名包扫描：默认别名为类的名称  不区分大小写 -->
+        <package name="com.dyl.mybatis.pojo"/>
+        <!-- 如果配置了两个别名包扫描器 在两个包下有类名相同的类  这时使用别名时就会出错 -->
+       <!--  <package name="com.dyl.mybatis.pojo.alias"/> -->
+    </typeAliases>
+	<!-- 和spring整合后 environments配置将废除    -->
+	<environments default="development">
+		<environment id="development">
+			<!-- 使用jdbc事务管理 -->
+			<transactionManager type="JDBC" />
+			<!-- 数据库连接池 -->
+			<dataSource type="POOLED">
+				<property name="driver" value="${jdbc.driver}" />
+				<property name="url"
+					value="${jdbc.url}" />
+				<property name="username" value="${jdbc.username}" />
+				<property name="password" value="${jdbc.password}" />
+			</dataSource>
+		</environment>
+	</environments>
+	
+	<!-- Mapper的位置  Mapper.xml 写Sql语句的文件的位置 -->
+	<mappers>
+	    <!-- 在当前目录下进行扫描 -->
+		<!--  <mapper resource="mybatis/UserMapper.xml" /> -->
+		<!-- 映射文件class扫描器
+			1.接口文件必须与映射文件同级目录下
+			2.接口名必须与映射文件名一致
+		 -->
+		<!--  <mapper class="com.dyl.mybatis.mapper"/>-->
+		<!-- 包扫描 
+			1.接口文件必须与映射文件同级目录下
+			2.接口名必须与映射文件名一致
+		 -->
+		<package name="com.dyl.mybatis.mapper"/> 
+	</mappers>
+</configuration>

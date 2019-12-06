@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+	namespace:必须是接口的全路径名
+	方法名必须与sql id相同
+	方法的入参必须与parameterType类型一致
+	方法的返回值必须与resultType一致
+ -->
+<!-- 写Sql语句   -->
+<mapper namespace="com.dyl.mybatis.mapper.OrderMapper">
+    <!-- id 设置resultMap的id -->
+    <resultMap type="Order" id="orderResultMap">
+        <!-- 主键映射 -->
+        <id property="id" column="id"/>
+        <!-- 属性字段映射 -->
+        <result property="userId" column="user_id"/>
+        <result property="number" column="number" />
+		<result property="createtime" column="createtime" />
+		<result property="note" column="note" />
+    </resultMap>
+	<!-- <select id="findOrderAll" resultType="Order"> -->
+    <select id="findOrderAll" resultMap="orderResultMap"> 
+        select * from `order`
+    </select>
+    <resultMap type="order" id="orderUserResultMap">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="number" column="number" />
+		<result property="createtime" column="createtime" />
+		<result property="note" column="note" />
+		<association property="user" javaType="com.dyl.mybatis.pojo.User">
+		    <id property="id" column="user_id"/>
+		    <result property="username" column="username"/>
+		</association>
+    </resultMap>
+    <select id="queryOrderUserResultMap" resultMap="orderUserResultMap">
+        select *,u.id,u.username from `order` o left join `user` u on u.id = o.user_id;
+    </select>
+</mapper>
