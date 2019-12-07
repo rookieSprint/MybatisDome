@@ -25,6 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="findOrderAll" resultMap="orderResultMap"> 
         select * from `order`
     </select>
+    
     <resultMap type="order" id="orderUserResultMap">
         <id property="id" column="id"/>
         <result property="userId" column="user_id"/>

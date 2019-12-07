@@ -11,4 +11,5 @@ public interface UserMapper {
 	List<User> queryUserByQueryVo(QueryVo queryVo);
 	List<User> queryUserWhere(User user);
 	List<User> findUserByids(QueryVo queryVo);
+	List<User> queryUserOrder();
 }

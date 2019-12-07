@@ -12,12 +12,26 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Test;
 
 import com.dyl.mybatis.mapper.UserMapper;
+import com.dyl.mybatis.pojo.Order;
 import com.dyl.mybatis.pojo.QueryVo;
 import com.dyl.mybatis.pojo.User;
 import com.dyl.mybatis.untils.MybatisUtil;
 
 public class UserMapperTest {
 
+	@Test
+	public void queryUserOrder() throws IOException{
+		SqlSession sqlSession = MybatisUtil.getSqlSessionFactoty("sqlMapConfig.xml").openSession();
+		UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+		List<User> users = userMapper.queryUserOrder();
+		for (User user : users) {
+			System.out.println(user);
+			List<Order> orders = user.getOrders();
+			for (Order order : orders) {
+				System.out.println(order);
+			}
+		}
+	}
 	
 	
 	@Test

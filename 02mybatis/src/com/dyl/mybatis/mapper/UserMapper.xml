@@ -22,6 +22,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 where id = #{v}
 	</select>
 	
+	<resultMap type="user" id="user_order_map">
+	    <id property="id"  column="id"/>
+	    <result property="username" column="username"/>
+	    <result property="birthday" column="birthday"/>
+	    <result property="sex" column="sex"/>
+	    <result property="address" column="address"/>
+	    <collection property="orders" ofType="order">
+	        <!-- id标签用于绑定主键 -->
+	        <!-- 此处的oid为order表中的id   由于两张表中都有id字段所以给order中的id起别名oid -->
+			<id property="id" column="oid"/>
+			<!-- 使用result绑定普通字段 -->
+			<result property="userId" column="user_id"/>
+			<result property="number" column="number"/>
+			<result property="createtime" column="createtime"/>
+	    </collection>
+	</resultMap>
+	<select id="queryUserOrder" resultMap="user_order_map">
+		select  *,o.id oid,o.user_id,o.number,o.createtime from `user` u left join `order` o on o.user_id=u.id    
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	<!-- //根据用户名称模糊查询用户列表
 	#{}    select * from user where id = ？    占位符  ? ==  '五'
 	${}    select * from user where username like '%五%'  字符串拼接  
